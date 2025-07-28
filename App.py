@@ -14,7 +14,7 @@ from Media import *
 # [ ]: add the possibility to download all the media added once
 # [ ]: add an progress bar
 # [ ]: add the possibility to add a playlist (checks if is a playlist duhh)
-# TODO: add a function to display error or succeed
+# TODO: add a function to display error or succeed modal
 
 class DownloadMedia:
     """A utility class for handling media file path selection and initiating downloads."""

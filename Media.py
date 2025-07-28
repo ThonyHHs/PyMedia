@@ -3,6 +3,7 @@ from os.path import join
 import sys, getopt
 from enum import Enum
 import re
+import subprocess
 
 from pytubefix import YouTube, Stream
 
@@ -145,7 +146,7 @@ class Downloader:
         try:
             self.media.download_video()
             self.media.download_audio()
-            system(f"{join(FFMPEG_PATH, 'ffmpeg.exe')} -i {self.media.video_name} -i {self.media.audio_name} -c:v copy -c:a aac {join(self.file_dir, self.media.file_name)}")
+            system(f'{join(FFMPEG_PATH, 'ffmpeg.exe')} -i {self.media.video_name} -i {self.media.audio_name} -c:v copy -c:a aac "{join(self.file_dir, self.media.file_name)}"')
         except Exception as e:
             print("merging error: ",e)
     
@@ -159,7 +160,7 @@ class Downloader:
         """
         try:
             self.media.download_audio()
-            system(f"{join(FFMPEG_PATH, 'ffmpeg.exe')} -i {self.media.audio_name} -acodec libmp3lame {join(self.file_dir, self.media.file_name)}")
+            system(f'{join(FFMPEG_PATH, 'ffmpeg.exe')} -i {self.media.audio_name} -acodec libmp3lame "{join(self.file_dir, self.media.file_name)}"')
         except Exception as e:
             print("audio error: ",e)
     
@@ -214,7 +215,7 @@ class DownloadQueue:
             downloader.download()
 
 
-def main(argv):
+def cli(argv: list):
     try:
         options, args = getopt.getopt(argv, "van:p:l:", ["video", "audio", "name=", "path=", "url="])
     except Exception as e:
@@ -244,5 +245,33 @@ def main(argv):
     except Exception as e:
         print("Download error:", e)
 
+def tui():
+    print("""__ _____  _   _  ___
+\\ V /_ _|| \\_/ || o \\
+ \\ / | /o\\ \\_/ ||  _/
+ |_| |_\\_/_| |_||_|
+          """)
+    
+    url = input("Enter URL: ")
+    file_type = input("Type: ")
+    file_dir = input("Folder Path: ")
+    file_name = input("File Name: ")
+    print()
+    file_type = FileType.VIDEO
+
+    if file_type == FileType.VIDEO:
+        file_name += '.mp4'
+    elif file_type == FileType.AUDIO:
+        file_name += '.mp3'
+
+    try:
+        media = Media(url, file_name, file_type)
+        Downloader(media, file_dir).download()
+    except Exception as e:
+        print("Download error:", e)
+
+
 if __name__ == "__main__":
-    main(sys.argv[1:])
+    if sys.argv[1:]:
+        cli(sys.argv[1:])
+    tui()
