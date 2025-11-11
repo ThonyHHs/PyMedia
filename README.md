@@ -1,5 +1,5 @@
-# Media Downloader
-**Media Downloader** is a tool for downloading YouTube videos and audio, available in both GUI (Graphical User Interface) and CLI (Command Line Interface) modes.
+# PyMedia
+**PyMedia** is a tool for downloading YouTube videos and audio, available in both GUI (Graphical User Interface) and CLI (Command Line Interface) modes.
 
 ## Features
 - **Video and audio support:** Download videos and audio separately or merge them into a single file.
