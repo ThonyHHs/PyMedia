@@ -9,7 +9,6 @@ from pytubefix import YouTube, Stream
 
 FFMPEG_PATH = join('ffmpeg', 'bin')
 
-
 def get_number_of_items(listItems: list, numElements: int) -> list:
     if len(listItems) <= numElements:
         return listItems
@@ -274,4 +273,5 @@ def tui():
 if __name__ == "__main__":
     if sys.argv[1:]:
         cli(sys.argv[1:])
+        exit()
     tui()
